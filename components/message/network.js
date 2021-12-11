@@ -1,9 +1,9 @@
 //Maneja las conexiones del componente message, no maneja logica, eso se agregara posteriormente en controller.js
 
 const express = require("express");
-
+const controller = require("./controller");
 const router = express.Router();
-const response= require("../../network/response")
+const response = require("../../network/response")
 
 router.get("/", function (req, res) {
     console.log(req.headers);
@@ -14,12 +14,10 @@ router.get("/", function (req, res) {
 });
 
 router.post("/", function (req, res) {
-    console.log(req.query);
-    if (req.query.error == "ok") {
-        response.error(req, res, "Error inesperado", 500, "Es solo una simulacion");
-    } else {
-        response.success(req, res, "Creado correctamente", 201);
-    }
+
+    controller.addMessage(req.body.user, req.body.message)
+        .then((fullMessage) => response.success(req, res, fullMessage, 201))
+        .catch((err) => response.error(req, res, err, 500, "Es solo una simulacion"))
 })
 
 module.exports = router;
