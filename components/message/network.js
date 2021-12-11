@@ -6,7 +6,8 @@ const router = express.Router();
 const response = require("../../network/response")
 
 router.get("/", (req, res) => {
-    controller.getMessages()
+    let filterMessages=req.query.user || null;
+    controller.getMessages(filterMessages)
         .then((listMessages) => response.success(req, res, listMessages, 200))
         .catch((err) => response.error(req, res, err, 500))
 });
@@ -20,6 +21,12 @@ router.post("/", (req, res) => {
 router.patch("/:id", (req, res) => {
     controller.updateMessage(req.params.id, req.body.message)
         .then((message) => response.success(req, res, message, 200))
+        .catch((err) => response.error(req, res, "Error inesperado", 500, err));
+})
+
+router.delete("/:id", (req, res) => {
+    controller.deleteMessage(req.params.id)
+        .then((message) => response.success(req, res, `Mensaje ${req.params.id} eliminado`, 200))
         .catch((err) => response.error(req, res, "Error inesperado", 500, err));
 })
 

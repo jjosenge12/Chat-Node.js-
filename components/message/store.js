@@ -13,23 +13,37 @@ const addMessage = async function (message) {
     return await myMessage.save();
 }
 
-const getMessages = async function () {
-    const messages = await Model.find();
+const getMessages = async function (filterUser) {
+    let filter = {}
+    if (filterUser != null) {
+        filter = {
+            user: filterUser
+        }
+    }
+    const messages = await Model.find(filter);
     return messages;
 }
 
-const updateMessage = async function(id,newMessage){
-    const oldMessage=await Model.findOne({
-        _id:id
+const updateMessage = async function (id, newMessage) {
+    const oldMessage = await Model.findOne({
+        _id: id
     });
 
-    oldMessage.message= newMessage;
+    oldMessage.message = newMessage;
     return await addMessage(oldMessage);
+
+}
+
+const deleteMessage = async function (id) {
+    return await Model.deleteOne(
+        { _id: id }
+    );
 
 }
 
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }

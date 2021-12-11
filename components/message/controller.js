@@ -1,8 +1,8 @@
 const store = require("./store")
 
-const getMessages = function () {
+const getMessages = function (filterMessages) {
     return new Promise((resolve, reject) => {
-        return resolve(store.getMessages());
+        return resolve(store.getMessages(filterMessages));
     })
 }
 
@@ -35,8 +35,18 @@ const updateMessage= function (id,message){
     })
 }
 
+const deleteMessage = function (id) {
+    return new Promise(async (resolve, reject) => {
+        if(!id){
+            return reject("No hay id");
+        }
+        return await resolve(store.deleteMessage(id));
+    })
+}
+
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }
