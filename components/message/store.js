@@ -1,12 +1,8 @@
-const db = require("mongoose");
-const Model = require("./model")
 
-db.Promise = global.Promise;
-db.connect("mongodb+srv://Jano:contrasenia@cluster0.mh8uj.mongodb.net/test", {
-    useNewUrlParser: true,
-})
-    .then(() => console.log("db conectada con exito"))
-    .catch((err) => console.error("Error en conexion db"));
+const Model = require("./model")
+const db= require("./db")
+db("mongodb+srv://Jano:contrasenia@cluster0.mh8uj.mongodb.net/test");
+
 
 const addMessage = async function (message) {
     const myMessage = new Model(message);
