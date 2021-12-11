@@ -6,11 +6,9 @@ const router = express.Router();
 const response = require("../../network/response")
 
 router.get("/", function (req, res) {
-    console.log(req.headers);
-    res.header({
-        "custom-header": "Valor personalizado"
-    });
-    response.success(req, res, "lista de mensajes");
+    controller.getMessages()
+        .then((listMessages) => response.success(req, res, listMessages, 200))
+        .catch((err) => response.error(req, res, err, 500))
 });
 
 router.post("/", function (req, res) {
