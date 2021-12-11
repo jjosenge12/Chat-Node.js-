@@ -5,17 +5,22 @@ const controller = require("./controller");
 const router = express.Router();
 const response = require("../../network/response")
 
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
     controller.getMessages()
         .then((listMessages) => response.success(req, res, listMessages, 200))
         .catch((err) => response.error(req, res, err, 500))
 });
 
-router.post("/", function (req, res) {
-
+router.post("/", (req, res) => {
     controller.addMessage(req.body.user, req.body.message)
         .then((fullMessage) => response.success(req, res, fullMessage, 201))
         .catch((err) => response.error(req, res, err, 500, "Es solo una simulacion"))
+})
+
+router.patch("/:id", (req, res) => {
+    controller.updateMessage(req.params.id, req.body.message)
+        .then((message) => response.success(req, res, message, 200))
+        .catch((err) => response.error(req, res, "Error inesperado", 500, err));
 })
 
 module.exports = router;
