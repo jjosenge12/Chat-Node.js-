@@ -5,7 +5,7 @@ const connect = function (url) {
     db.connect(url, {
         useNewUrlParser: true,
     })
-        .then(() => console.log("db conectada con exito"))
+        .then(() => console.log("User:db conectada con exito"))
         .catch((err) => console.error("Error en conexion db"));
 }
 

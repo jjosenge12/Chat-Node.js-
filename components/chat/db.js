@@ -5,7 +5,7 @@ const connect = function (url) {
     db.connect(url, {
         useNewUrlParser: true,
     })
-        .then(() => console.log("Message:db conectada con exito"))
+        .then(() => console.log("Chat:db conectada con exito"))
         .catch((err) => console.error("Error en conexion db"));
 }
 
