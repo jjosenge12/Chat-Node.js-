@@ -6,7 +6,7 @@ const router = express.Router();
 const response = require("../../network/response")
 
 router.post("/", (req, res) => {
-    controller.addUser(req.body.username)
+    controller.addUser(req.body.name)
         .then((data) => response.success(req, res, data, 201))
         .catch((err) => response.error(req, res, err, 500, "Es solo una simulacion"))
 })

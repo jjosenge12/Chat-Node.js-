@@ -2,23 +2,21 @@ const store = require("./store")
 
 const addUser = function (username) {
     return new Promise(async (resolve, reject) => {
-        if (!username) {
-            return reject("Falta nombre de usuario");
-        } else {
+        if (!username)
+            reject("Falta nombre de usuario");
+        else {
             const myUser = {
-                username: username,
+                name: username,
             }
             console.log(myUser);
-            const newUser = await store.addUser(myUser);
-            return resolve(newUser);
+            resolve(store.addUser(myUser))
         }
     })
 }
 
 const getUsers = function () {
-    return new Promise((resolve, reject) => {
-        return resolve(store.getUsers());
-    })
+    return new Promise((resolve, reject) => resolve(store.getUsers())
+    )
 }
 
 

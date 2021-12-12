@@ -1,6 +1,6 @@
 
 const Model = require("./model")
-const db= require("./db")
+const db = require("./db")
 db("mongodb+srv://Jano:contrasenia@cluster0.mh8uj.mongodb.net/test");
 
 
@@ -10,14 +10,25 @@ const addMessage = async function (message) {
 }
 
 const getMessages = async function (filterUser) {
-    let filter = {}
-    if (filterUser != null) {
-        filter = {
-            user: filterUser
+    return new Promise((resolve, reject) => {
+        let filter = {}
+        if (filterUser != null) {
+            filter = {
+                user: filterUser
+            }
         }
-    }
-    const messages = await Model.find(filter);
-    return messages;
+        Model.find(filter)
+            .populate('user')
+            .exec((error, data) => {
+                if (error)
+                    reject(error)
+                else {
+                    console.log("data");
+                    console.log(data);
+                    resolve(data)
+                }
+            })
+    })
 }
 
 const updateMessage = async function (id, newMessage) {
