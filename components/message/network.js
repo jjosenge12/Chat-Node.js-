@@ -6,14 +6,17 @@ const router = express.Router();
 const response = require("../../network/response")
 
 router.get("/", (req, res) => {
-    let filterMessages=req.query.user || null;
-    controller.getMessages(filterMessages)
+    let filter = {
+        chat: req.query.chat || null ,
+        user: req.query.user || null
+    };
+    controller.getMessages(filter)
         .then((listMessages) => response.success(req, res, listMessages, 200))
         .catch((err) => response.error(req, res, err, 500))
 });
 
 router.post("/", (req, res) => {
-    controller.addMessage(req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
         .then((fullMessage) => response.success(req, res, fullMessage, 201))
         .catch((err) => response.error(req, res, err, 500, "Es solo una simulacion"))
 })

@@ -4,12 +4,13 @@ const getMessages = function (filterMessages) {
     return new Promise((resolve, reject) => resolve(store.getMessages(filterMessages)))
 }
 
-const addMessage = function (user, message) {
+const addMessage = function (chat,user, message) {
     return new Promise(async (resolve, reject) => {
-        if (!user || !message)
-            reject("Falta nombre de usuario o mensaje");
+        if (!chat || !user || !message)
+            reject("Faltan datos");
         else {
             const fullMessage = {
+                chat: chat,
                 user: user,
                 message: message,
                 date: new Date()

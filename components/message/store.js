@@ -9,22 +9,22 @@ const addMessage = async function (message) {
     return await myMessage.save();
 }
 
-const getMessages = async function (filterUser) {
+const getMessages = async function (filterMessage) {
     return new Promise((resolve, reject) => {
         let filter = {}
-        if (filterUser != null) {
-            filter = {
-                user: filterUser
-            }
-        }
+
+        if (filterMessage.chat != null)
+            filter.chat = filterMessage.chat
+
+        if (filterMessage.user != null)
+            filter.user = filterMessage.user
+
         Model.find(filter)
             .populate('user')
             .exec((error, data) => {
                 if (error)
                     reject(error)
                 else {
-                    console.log("data");
-                    console.log(data);
                     resolve(data)
                 }
             })

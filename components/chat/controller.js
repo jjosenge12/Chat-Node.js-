@@ -2,8 +2,8 @@ const store = require("./store")
 
 const addChat = function (users) {
     return new Promise(async (resolve, reject) => {
-        if (!users)
-            reject("Faltan usuarios");
+        if (!users || !Array.isArray(users))
+            reject("Falta array de usuarios");
         else {
             const myChat = {
                 users: users,
